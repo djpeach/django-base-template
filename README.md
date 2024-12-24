@@ -5,6 +5,7 @@ A basic django template that registers a custom user model and has a basic code 
 The registered user model does nothing except removing the "email" field requirement for superuser creation.
 
 ## Code structure
+All the django settings and server runners are housed in the `_django` directory.
 This project houses all apps in an `apps/` subdirectory to keep the root of the project cleaner. 
 It also houses all static files and templates in designated directories, and configures these in the settings.
 
