@@ -11,21 +11,30 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env(DEBUG=(bool, False))
+env.read_env(BASE_DIR / ".env/.local.env")
+
+ENV = env("ENVIRONMENT")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-b+#pr6j58qofsdz-rjzb-39r%585=ncx+&z98bgmc_tsk$av$l"
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env("DEBUG")
 
-ALLOWED_HOSTS = []
+if ENV == "development":
+    ALLOWED_HOSTS = ["0.0.0.0", "localhost", "127.0.0.1"]
+    CORS_ORIGIN_ALLOW_ALL = True
+else:
+    ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -37,6 +46,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "behave_django",
+    "apps.accounts",
 ]
 
 MIDDLEWARE = [
@@ -73,13 +84,18 @@ WSGI_APPLICATION = "_django.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
+DATABASES = {"default": env.db()}
 
+# Auth user model
+# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-user-model
+AUTH_USER_MODEL = "accounts.User"
+
+# Auth backends
+# https://docs.djangoproject.com/en/5.1/ref/settings/#authentication-backends
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "apps.accounts.auth_backends.EmailAuthBackend",
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
