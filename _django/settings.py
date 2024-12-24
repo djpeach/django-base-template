@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "behave_django",
     "apps.accounts",
+    "apps.website",
 ]
 
 MIDDLEWARE = [
@@ -135,7 +136,7 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_URL = "static/"
 STATIC_ROOT = "staticfiles"
 
-MEDIA_URL = "/media"
+MEDIA_URL = "media/"
 MEDIA_ROOT = "mediafiles"
 
 # Default primary key field type
