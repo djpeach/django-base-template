@@ -8,12 +8,14 @@ colorama==0.4.6
 cucumber-expressions==18.0.1
 cucumber-tag-expressions==6.1.1
 Django==5.1.4
+django-environ==0.11.2
 mypy-extensions==1.0.0
 packaging==24.2
 parse==1.20.2
 parse_type==0.6.4
 pathspec==0.12.1
 platformdirs==4.3.6
+psycopg2-binary==2.9.10
 six==1.17.0
 soupsieve==2.6
 sqlparse==0.5.3
